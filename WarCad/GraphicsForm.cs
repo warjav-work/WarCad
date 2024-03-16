@@ -13,9 +13,11 @@ namespace WarCad
     public partial class GraphicsForm : Form
     {
         #region Variables
+        // vectors
         private Vector3 currentPosition;
         private Vector3 firstPoint;
         private Vector3 secondPoint;
+        // lists
         private List<Entities.Point> _points = new List<Entities.Point>();
         private List<Entities.Line> _lines = new List<Entities.Line>();
         private List<Entities.Circle> _circles = new List<Entities.Circle>();
@@ -23,8 +25,11 @@ namespace WarCad
         private List<Entities.Arc> _arcs = new List<Entities.Arc>();
         private List<LwPolyline> _polylines = new List<LwPolyline>();
         private LwPolyline tempPolyline = new LwPolyline();
+        // ints
         private int DrawIndex = -1;
         private int ClickNum = 1;
+        private int direction;
+        // float
         private float xScroll;
         private float yScroll;
         private float ScaleFactor = 1.0f;
@@ -171,8 +176,21 @@ namespace WarCad
                             tempPolyline.Vertexes.Add(new LwPolylineVertex(firstPoint.ToVector2));
                             ClickNum = 2;
                             break;
-                        case 6: // point
+                        case 6: // Point
                             _points.Add(new Entities.Point(currentPosition));
+                            break;
+                        case 7:// Rectangle
+                            switch (ClickNum)
+                            {
+                                case 1:
+                                    firstPoint = currentPosition;
+                                    ClickNum++;
+                                    break;
+                                case 2:
+                                    _polylines.Add(Method.PointToRect(firstPoint, currentPosition, out direction));
+                                    CancelAll();
+                                    break;
+                            }
                             break;
 
 
@@ -254,11 +272,18 @@ namespace WarCad
             // Draw Line extended
             switch (DrawIndex)
             {
-                case 3:
-                case 4:
+                case 3:// Line
+                case 4:// LwPolyline
                     if (ClickNum == 2)
                     {
                         e.Graphics.DrawLine(penExtend, new Entities.Line(firstPoint, currentPosition));
+                    }
+                    break;
+                case 7:// Rectangle
+                    if(ClickNum == 2)
+                    {
+                        LwPolyline lw = Method.PointToRect(firstPoint, currentPosition, out direction);
+                        e.Graphics.DrawPolyline(penExtend, lw);
                     }
                     break;
                 case 21:

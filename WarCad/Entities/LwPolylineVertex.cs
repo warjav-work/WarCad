@@ -18,6 +18,9 @@ namespace WarCad.Entities
         public LwPolylineVertex(Vector2 position) : this(position, 0.0)
         {
         }
+        public LwPolylineVertex(double x, double y) : this(new Vector2(x, y), 0.0)
+        {
+        }
 
         public LwPolylineVertex(Vector2 position, double bulge)
         {
