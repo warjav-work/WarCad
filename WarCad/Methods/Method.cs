@@ -145,11 +145,50 @@ namespace WarCad.Methods
             vertexes.Add(new LwPolylineVertex(x + width, y + height));
             vertexes.Add(new LwPolylineVertex(x, y + height));
 
-            if(dx > 0) direction = 1;
-            else if(dx < 0) direction = 2;
+            if (dx > 0) direction = 1;
+            else if (dx < 0) direction = 2;
             else direction = -1;
 
             return new LwPolyline(vertexes, true);
+        }
+
+        public static LwPolyline GetPolygon(Vector3 center, Vector3 secondPoint, int sidesQty, int inscribed)
+        {
+            List<LwPolylineVertex> vertexes = new List<LwPolylineVertex>();
+            double sidesAngle = 360.0 / sidesQty;
+            double radius = center.DistanceFrom(secondPoint);
+            double lineAngle = LineAngle(center, secondPoint);
+
+            if (inscribed == 1)
+            {
+                lineAngle -= sidesAngle / 2.0;
+                radius /= Math.Cos(sidesAngle / 180.0 * Math.PI / 2.0);
+            }
+            for (int i = 0; i < sidesQty; i++)
+            {
+                double x = center.X + radius * Math.Cos(lineAngle / 180.0 * Math.PI);
+                double y = center.Y + radius * Math.Sin(lineAngle / 180.0 * Math.PI);
+
+                vertexes.Add(new LwPolylineVertex(x, y));
+                lineAngle += sidesAngle;
+            }
+            return new LwPolyline(vertexes, true);
+        }
+
+        public static Arc GetArcWithCenterStartEnd(Vector3 center, Vector3 startPoint, Vector3 endPoint)
+        {
+            double start = LineAngle(center, startPoint);
+            double end = LineAngle(center, endPoint);
+            double radius = center.DistanceFrom(startPoint);
+            if (end > start)
+            {
+                end -= start;
+            }
+            else
+            {
+                end += 360.0 - start;
+            }
+            return new Arc(center, radius, start, end);
         }
 
         private static double DeterminePointOfLine(Line line, Vector3 v)

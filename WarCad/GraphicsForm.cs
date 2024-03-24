@@ -29,6 +29,8 @@ namespace WarCad
         private int DrawIndex = -1;
         private int ClickNum = 1;
         private int direction;
+        private int sidesQty = 5;
+        private int inscribed = 1;
         // float
         private float xScroll;
         private float yScroll;
@@ -87,7 +89,9 @@ namespace WarCad
                 {
                     switch (DrawIndex)
                     {
-                        case 11:// Arc
+                        case 11:// Arc (3-Point)                           
+                        case 12:// Arc (Start, Center, End)                            
+                        case 13:// Arc (Center, Start, End)
                             switch (ClickNum)
                             {
                                 case 1:
@@ -99,7 +103,18 @@ namespace WarCad
                                     ClickNum++;
                                     break;
                                 case 3:
-                                    _arcs.Add(Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition));
+                                    switch (DrawIndex)
+                                    {
+                                        case 11:
+                                            _arcs.Add(Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition));
+                                            break;
+                                        case 12:
+                                            _arcs.Add(Method.GetArcWithCenterStartEnd(secondPoint, firstPoint, currentPosition));
+                                            break;
+                                        case 13:
+                                            _arcs.Add(Method.GetArcWithCenterStartEnd(firstPoint, secondPoint, currentPosition));
+                                            break;
+                                    }                                    
                                     CancelAll();
                                     break;
                             }
@@ -171,10 +186,36 @@ namespace WarCad
                                     break;
                             }
                             break;
-                        case 4://LwPoliline
+                        case 4:// LwPoliline
                             firstPoint = currentPosition;
                             tempPolyline.Vertexes.Add(new LwPolylineVertex(firstPoint.ToVector2));
                             ClickNum = 2;
+                            break;
+                        case 5:// Poligon
+                            switch (ClickNum)
+                            {
+                                case 1:
+                                    firstPoint = currentPosition;
+                                    ClickNum++;
+                                    using (var setPoligon = new EntryForms.SetPoligonValuesForm())
+                                    {
+                                        var result = setPoligon.ShowDialog();
+                                        if (result == DialogResult.OK)
+                                        {
+                                            sidesQty = setPoligon.SidesQty;
+                                            inscribed = setPoligon.Inscribed;
+                                        }
+                                        else
+                                        {
+                                            CancelAll();
+                                        }
+                                    }
+                                    break;
+                                case 2:
+                                    _polylines.Add(Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed));
+                                    CancelAll();
+                                    break;
+                            }
                             break;
                         case 6: // Point
                             _points.Add(new Entities.Point(currentPosition));
@@ -197,7 +238,7 @@ namespace WarCad
                     }
                     drawing.Refresh();
                 }
-            }            
+            }
         }
         #endregion
 
@@ -257,7 +298,7 @@ namespace WarCad
             // Draw all LwPolylines
             if (_polylines.Any())
             {
-                foreach(LwPolyline lw in _polylines)
+                foreach (LwPolyline lw in _polylines)
                 {
                     e.Graphics.DrawPolyline(pen, lw);
                 }
@@ -280,11 +321,20 @@ namespace WarCad
                     }
                     break;
                 case 7:// Rectangle
-                    if(ClickNum == 2)
+                    if (ClickNum == 2)
                     {
                         LwPolyline lw = Method.PointToRect(firstPoint, currentPosition, out direction);
                         e.Graphics.DrawPolyline(penExtend, lw);
                     }
+                    break;
+                case 5:// Polygon
+                    if (ClickNum == 2)
+                    {
+                        e.Graphics.DrawLine(penExtend, new Entities.Line(firstPoint, currentPosition));
+                        LwPolyline lw = Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed);
+                        e.Graphics.DrawPolyline(penExtend, lw);
+                    }
+
                     break;
                 case 21:
                     if (ClickNum == 2)
@@ -320,14 +370,30 @@ namespace WarCad
 
                     }
                     break;
-                case 11:
+                case 11:// arc 3-Point
+                case 12:// Start, Center, End
+                case 13:// center, Start, End
                     switch (ClickNum)
                     {
                         case 2:
                             e.Graphics.DrawLine(penExtend, new Entities.Line(firstPoint, currentPosition));
                             break;
                         case 3:
-                            e.Graphics.DrawArc(penExtend, Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition));
+                            switch (DrawIndex)
+                            {
+                                case 11:
+                                    e.Graphics.DrawArc(penExtend, Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition));
+                                    break;
+                                case 12:
+                                    e.Graphics.DrawLine(penExtend, new Entities.Line(secondPoint, currentPosition));
+                                    e.Graphics.DrawArc(penExtend, Method.GetArcWithCenterStartEnd(secondPoint, firstPoint, currentPosition));
+                                    break;
+                                case 13:
+                                    e.Graphics.DrawLine(penExtend, new Entities.Line(firstPoint, currentPosition));
+                                    e.Graphics.DrawArc(penExtend, Method.GetArcWithCenterStartEnd(firstPoint, secondPoint, currentPosition));
+                                    break;
+                            }
+
                             break;
 
                     }
@@ -448,7 +514,7 @@ namespace WarCad
                         {
                             _polylines.Add(new LwPolyline(vertexes, false));
                         }
-                        break;                    
+                        break;
                 }
             }
             tempPolyline.Vertexes.Clear();

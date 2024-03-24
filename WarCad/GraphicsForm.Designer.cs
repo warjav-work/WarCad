@@ -54,6 +54,8 @@
             this.screen = new System.Windows.Forms.ToolStripStatusLabel();
             this.vScrollBar = new System.Windows.Forms.VScrollBar();
             this.hScrollBar = new System.Windows.Forms.HScrollBar();
+            this.arcBttn2 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn3 = new System.Windows.Forms.RibbonButton();
             this.popup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawing)).BeginInit();
             this.stripStatus.SuspendLayout();
@@ -65,19 +67,19 @@
             this.CancelBtn,
             this.CloseBoundary});
             this.popup.Name = "menuStrip";
-            this.popup.Size = new System.Drawing.Size(181, 70);
+            this.popup.Size = new System.Drawing.Size(111, 48);
             // 
             // CancelBtn
             // 
             this.CancelBtn.Name = "CancelBtn";
-            this.CancelBtn.Size = new System.Drawing.Size(180, 22);
+            this.CancelBtn.Size = new System.Drawing.Size(110, 22);
             this.CancelBtn.Text = "Cancel";
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
             // CloseBoundary
             // 
             this.CloseBoundary.Name = "CloseBoundary";
-            this.CloseBoundary.Size = new System.Drawing.Size(180, 22);
+            this.CloseBoundary.Size = new System.Drawing.Size(110, 22);
             this.CloseBoundary.Text = "Close";
             this.CloseBoundary.Click += new System.EventHandler(this.closeBoundary_Click);
             // 
@@ -126,6 +128,8 @@
             // arcBtn
             // 
             this.arcBtn.DropDownItems.Add(this.arcBttn1);
+            this.arcBtn.DropDownItems.Add(this.arcBttn2);
+            this.arcBtn.DropDownItems.Add(this.arcBttn3);
             this.arcBtn.Image = global::WarCad.Properties.Resources.IconArc;
             this.arcBtn.LargeImage = global::WarCad.Properties.Resources.IconArc;
             this.arcBtn.Name = "arcBtn";
@@ -310,6 +314,26 @@
             this.hScrollBar.TabIndex = 14;
             this.hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_Scroll);
             // 
+            // arcBttn2
+            // 
+            this.arcBttn2.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn2.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn2.Image")));
+            this.arcBttn2.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn2.LargeImage")));
+            this.arcBttn2.Name = "arcBttn2";
+            this.arcBttn2.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn2.SmallImage")));
+            this.arcBttn2.Text = "Start, Center, End";
+            this.arcBttn2.Click += new System.EventHandler(this.ArcBtn_Click);
+            // 
+            // arcBttn3
+            // 
+            this.arcBttn3.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn3.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn3.Image")));
+            this.arcBttn3.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn3.LargeImage")));
+            this.arcBttn3.Name = "arcBttn3";
+            this.arcBttn3.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn3.SmallImage")));
+            this.arcBttn3.Text = "Center, Start, End";
+            this.arcBttn3.Click += new System.EventHandler(this.ArcBtn_Click);
+            // 
             // GraphicsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
@@ -359,6 +383,8 @@
         private System.Windows.Forms.VScrollBar vScrollBar;
         private System.Windows.Forms.HScrollBar hScrollBar;
         private System.Windows.Forms.ToolStripMenuItem CloseBoundary;
+        private System.Windows.Forms.RibbonButton arcBttn2;
+        private System.Windows.Forms.RibbonButton arcBttn3;
     }
 }
 
