@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WarCad.Entities;
+using WarCad.EntryForms;
 using WarCad.Methods;
 using Point = System.Drawing.Point;
 
@@ -114,8 +115,60 @@ namespace WarCad
                                         case 13:
                                             _arcs.Add(Method.GetArcWithCenterStartEnd(firstPoint, secondPoint, currentPosition));
                                             break;
-                                    }                                    
+                                    }
                                     CancelAll();
+                                    break;
+                            }
+                            break;
+                        case 14:// Arc (Center, Start, Angle)
+                        case 15:// Arc (Center, Start, Length)
+                        case 16:// Arc (Start, End, Angle)
+                        case 17:// Arc (Start, Center, Length)
+                            switch (ClickNum)
+                            {
+                                case 1:
+                                    firstPoint = currentPosition;
+                                    ClickNum++;
+                                    break;
+                                case 2:
+                                    secondPoint = currentPosition;
+                                    using (var getValue = new GetDoubleValue())
+                                    {
+                                        getValue.Title = "Angle";
+                                        switch (DrawIndex)
+                                        {
+                                            case 14:
+                                            case 16:
+                                                getValue.Title = "Angle";
+                                                break;
+                                            case 15:
+                                            case 17:
+                                                getValue.Title = "Length";
+                                                break;
+                                        }
+                                        var result = getValue.ShowDialog();
+                                        if (result == DialogResult.OK)
+                                        {
+                                            switch (DrawIndex)
+                                            {
+                                                case 14:
+                                                    _arcs.Add(Method.GetArcWithCenterStartAngle(firstPoint, currentPosition, getValue.ResultValue));
+                                                    break;
+                                                case 15:
+                                                    _arcs.Add(Method.GetArcWithCenterStartLength(firstPoint, currentPosition, getValue.ResultValue));
+                                                    break;
+                                                case 16:
+                                                    _arcs.Add(Method.GetArcWithStartEndAngle(firstPoint, currentPosition, getValue.ResultValue));
+                                                    break;
+                                                case 17:
+                                                    _arcs.Add(Method.GetArcWithCenterStartLength(currentPosition, firstPoint, getValue.ResultValue));
+                                                    break;
+                                            }
+
+                                        }
+                                        CancelAll();
+
+                                    }
                                     break;
                             }
                             break;
@@ -398,19 +451,30 @@ namespace WarCad
 
                     }
                     break;
+                case 14:// Arc (Center, Start, Angle)
+                case 15:// Arc (Center, Start, Length)
+                case 16:// Arc (Start, End, Angle)
+                case 17:// Arc (Start, Center, Length)
+                    switch (ClickNum)
+                    {
+                        case 2:
+                            e.Graphics.DrawLine(penExtend, new Entities.Line(firstPoint, currentPosition));
+                            break;
+                    }
+                    break;
             }
             // Test line line intersect
-            if (_lines.Any())
-            {
-                foreach (Entities.Line line1 in _lines)
-                {
-                    foreach (Entities.Line line2 in _lines)
-                    {
-                        Vector3 v = Method.LineLineIntersection(line1, line2);
-                        e.Graphics.DrawPoint(new Pen(Color.Black, 0), new Entities.Point(v));
-                    }
-                }
-            }
+            //if (_lines.Any())
+            //{
+            //    foreach (Entities.Line line1 in _lines)
+            //    {
+            //        foreach (Entities.Line line2 in _lines)
+            //        {
+            //            Vector3 v = Method.LineLineIntersection(line1, line2);
+            //            e.Graphics.DrawPoint(new Pen(Color.Black, 0), new Entities.Point(v));
+            //        }
+            //    }
+            //}
 
         }
         #endregion

@@ -38,6 +38,10 @@
             this.drawPanel = new System.Windows.Forms.RibbonPanel();
             this.arcBtn = new System.Windows.Forms.RibbonButton();
             this.arcBttn1 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn2 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn3 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn4 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn5 = new System.Windows.Forms.RibbonButton();
             this.circleBttn = new System.Windows.Forms.RibbonButton();
             this.circleBtn21 = new System.Windows.Forms.RibbonButton();
             this.CircleBtn22 = new System.Windows.Forms.RibbonButton();
@@ -54,8 +58,8 @@
             this.screen = new System.Windows.Forms.ToolStripStatusLabel();
             this.vScrollBar = new System.Windows.Forms.VScrollBar();
             this.hScrollBar = new System.Windows.Forms.HScrollBar();
-            this.arcBttn2 = new System.Windows.Forms.RibbonButton();
-            this.arcBttn3 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn6 = new System.Windows.Forms.RibbonButton();
+            this.arcBttn7 = new System.Windows.Forms.RibbonButton();
             this.popup.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.drawing)).BeginInit();
             this.stripStatus.SuspendLayout();
@@ -130,6 +134,10 @@
             this.arcBtn.DropDownItems.Add(this.arcBttn1);
             this.arcBtn.DropDownItems.Add(this.arcBttn2);
             this.arcBtn.DropDownItems.Add(this.arcBttn3);
+            this.arcBtn.DropDownItems.Add(this.arcBttn4);
+            this.arcBtn.DropDownItems.Add(this.arcBttn5);
+            this.arcBtn.DropDownItems.Add(this.arcBttn6);
+            this.arcBtn.DropDownItems.Add(this.arcBttn7);
             this.arcBtn.Image = global::WarCad.Properties.Resources.IconArc;
             this.arcBtn.LargeImage = global::WarCad.Properties.Resources.IconArc;
             this.arcBtn.Name = "arcBtn";
@@ -146,6 +154,46 @@
             this.arcBttn1.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn1.SmallImage")));
             this.arcBttn1.Text = "3-Point";
             this.arcBttn1.Click += new System.EventHandler(this.ArcBtn_Click);
+            // 
+            // arcBttn2
+            // 
+            this.arcBttn2.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn2.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn2.Image")));
+            this.arcBttn2.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn2.LargeImage")));
+            this.arcBttn2.Name = "arcBttn2";
+            this.arcBttn2.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn2.SmallImage")));
+            this.arcBttn2.Text = "Start, Center, End";
+            this.arcBttn2.Click += new System.EventHandler(this.ArcBtn_Click);
+            // 
+            // arcBttn3
+            // 
+            this.arcBttn3.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn3.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn3.Image")));
+            this.arcBttn3.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn3.LargeImage")));
+            this.arcBttn3.Name = "arcBttn3";
+            this.arcBttn3.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn3.SmallImage")));
+            this.arcBttn3.Text = "Center, Start, End";
+            this.arcBttn3.Click += new System.EventHandler(this.ArcBtn_Click);
+            // 
+            // arcBttn4
+            // 
+            this.arcBttn4.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn4.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn4.Image")));
+            this.arcBttn4.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn4.LargeImage")));
+            this.arcBttn4.Name = "arcBttn4";
+            this.arcBttn4.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn4.SmallImage")));
+            this.arcBttn4.Text = "Center, Start, Angle";
+            this.arcBttn4.Click += new System.EventHandler(this.ArcBtn_Click);
+            // 
+            // arcBttn5
+            // 
+            this.arcBttn5.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn5.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn5.Image")));
+            this.arcBttn5.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn5.LargeImage")));
+            this.arcBttn5.Name = "arcBttn5";
+            this.arcBttn5.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn5.SmallImage")));
+            this.arcBttn5.Text = "Center, Start, Length";
+            this.arcBttn5.Click += new System.EventHandler(this.ArcBtn_Click);
             // 
             // circleBttn
             // 
@@ -314,25 +362,25 @@
             this.hScrollBar.TabIndex = 14;
             this.hScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_Scroll);
             // 
-            // arcBttn2
+            // arcBttn6
             // 
-            this.arcBttn2.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
-            this.arcBttn2.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn2.Image")));
-            this.arcBttn2.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn2.LargeImage")));
-            this.arcBttn2.Name = "arcBttn2";
-            this.arcBttn2.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn2.SmallImage")));
-            this.arcBttn2.Text = "Start, Center, End";
-            this.arcBttn2.Click += new System.EventHandler(this.ArcBtn_Click);
+            this.arcBttn6.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn6.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn6.Image")));
+            this.arcBttn6.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn6.LargeImage")));
+            this.arcBttn6.Name = "arcBttn6";
+            this.arcBttn6.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn6.SmallImage")));
+            this.arcBttn6.Text = "Start, End, Angle";
+            this.arcBttn6.Click += new System.EventHandler(this.ArcBtn_Click);
             // 
-            // arcBttn3
+            // arcBttn7
             // 
-            this.arcBttn3.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
-            this.arcBttn3.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn3.Image")));
-            this.arcBttn3.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn3.LargeImage")));
-            this.arcBttn3.Name = "arcBttn3";
-            this.arcBttn3.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn3.SmallImage")));
-            this.arcBttn3.Text = "Center, Start, End";
-            this.arcBttn3.Click += new System.EventHandler(this.ArcBtn_Click);
+            this.arcBttn7.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Left;
+            this.arcBttn7.Image = ((System.Drawing.Image)(resources.GetObject("arcBttn7.Image")));
+            this.arcBttn7.LargeImage = ((System.Drawing.Image)(resources.GetObject("arcBttn7.LargeImage")));
+            this.arcBttn7.Name = "arcBttn7";
+            this.arcBttn7.SmallImage = ((System.Drawing.Image)(resources.GetObject("arcBttn7.SmallImage")));
+            this.arcBttn7.Text = "Start, Center, Length";
+            this.arcBttn7.Click += new System.EventHandler(this.ArcBtn_Click);
             // 
             // GraphicsForm
             // 
@@ -385,6 +433,10 @@
         private System.Windows.Forms.ToolStripMenuItem CloseBoundary;
         private System.Windows.Forms.RibbonButton arcBttn2;
         private System.Windows.Forms.RibbonButton arcBttn3;
+        private System.Windows.Forms.RibbonButton arcBttn4;
+        private System.Windows.Forms.RibbonButton arcBttn5;
+        private System.Windows.Forms.RibbonButton arcBttn6;
+        private System.Windows.Forms.RibbonButton arcBttn7;
     }
 }
 

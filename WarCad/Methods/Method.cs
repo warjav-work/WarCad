@@ -191,6 +191,65 @@ namespace WarCad.Methods
             return new Arc(center, radius, start, end);
         }
 
+        public static Arc GetArcWithCenterStartAngle(Vector3 center, Vector3 startPoint, double angle)
+        {
+            double start = LineAngle(center, startPoint);
+            double end = angle + start;
+            double radius = center.DistanceFrom(startPoint);
+            if (end > start)
+            {
+                end -= start;
+            }
+            else
+            {
+                end += 360.0 - start;
+            }
+            return new Arc(center, radius, start, end);
+
+        }
+        public static Arc GetArcWithCenterStartLength(Vector3 center, Vector3 startPoint, double length)
+        {
+            Arc arc = new Arc();
+            double start = LineAngle(center, startPoint);
+            double radius = center.DistanceFrom(startPoint);
+            if (length <= radius * 2)
+            {
+                double a = (2 * radius * radius - length * length) / (2 * radius * radius);
+                double end = Math.Acos(a) * 180.0 / Math.PI;
+                arc = new Arc(center, radius, start, end);
+            }
+            return arc;
+        }
+
+        public static Arc GetArcWithStartEndAngle(Vector3 startPoint, Vector3 endPoint, double angle)
+        {
+            Arc arc = new Arc();
+            double length = startPoint.DistanceFrom(endPoint);
+            double radius = Math.Sqrt(length * length / (1 - Math.Cos(angle * Math.PI / 180.0)) / 2);
+
+            if (length <= radius * 2)
+            {
+                double a = (180.0 - angle) / 2;
+                a += LineAngle(startPoint, endPoint);
+                double x = radius * Math.Cos(a * Math.PI / 180.0) + startPoint.X;
+                double y = radius * Math.Sin(a * Math.PI / 180.0) + startPoint.Y;
+                Vector3 center = new Vector3(x, y);
+                double start = LineAngle(center, startPoint);
+                double end = LineAngle(center, endPoint);
+                if(end > start)
+                {
+                    end -= start;
+                }
+                else                    
+                {
+                    end += 360.0 - start;
+                }
+                arc = new Arc(center, radius, start, end);
+            }
+            return arc;
+
+        }
+
         private static double DeterminePointOfLine(Line line, Vector3 v)
         {
             return (v.X - line.StartPoint.X) * (line.EndPoint.Y - line.StartPoint.Y) - (v.Y - line.StartPoint.Y) * (line.EndPoint.X - line.StartPoint.X);
